@@ -1,0 +1,16 @@
+1: Tour of Computer Systems
+-! OS Stack: layers of services, each building on lower layer
+-! Systems Programming: low-level programming that directly interacts with hardware or the OS, often using the syscall interface (e.g. raw memory access)
+-! Computation: handled by the Central Processing Unit (CPU)
+-! Data: Handled by memory (RAM and storage)
+-! Speed of memory access is limited by memory chip speed and the speed of light
+-! Registers: very small memory inside a CPU. Holds data items from memory
+-! We want the CPU to feel like it has access to a huge amount of cheap, fast memory
+-! What are some of the trade-offs of different forms of memory?: cost, distance and access speed, persistence, reliability
+-! Instruction Set Architectures: define the set of instructions the CPU can perform (e.g. x86, ARM)
+- Compilers are designed for specific CPU architectures
+-! 32-bit vs. 64-bit systems have different register sizes
+- 32-bit systems have 2^32 unique memory addresses, 64-bit systems have 2^64 unique memory addresses
+-! Register size = pointer variable size (32-bit uses 32-bit pointers)
+-! Address space size: pointer size controls the size of the memory address space
+-! Memory is made up of bytes, each byte has an address

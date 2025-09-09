@@ -1,0 +1,31 @@
+1: Tour of Computer Systems
+-! OS Stack: layers of services, each building on lower layer
+-! Systems Programming: low-level programming that directly interacts with hardware or the OS, often using the syscall interface (e.g. raw memory access)
+-! Computation: handled by the Central Processing Unit (CPU)
+-! Data: Handled by memory (RAM and storage)
+-! Speed of memory access is limited by memory chip speed and the speed of light
+-! Registers: very small memory inside a CPU. Holds data items from memory
+-! We want the CPU to feel like it has access to a huge amount of cheap, fast memory
+-! What are some of the trade-offs of different forms of memory?: cost, distance and access speed, persistence, reliability
+-! Instruction Set Architectures: define the set of instructions the CPU can perform (e.g. x86, ARM)
+- Compilers are designed for specific CPU architectures
+-! 32-bit vs. 64-bit systems have different register sizes
+- 32-bit systems have 2^32 unique memory addresses, 64-bit systems have 2^64 unique memory addresses
+-! Register size = pointer variable size (32-bit uses 32-bit pointers)
+-! Address space size: pointer size controls the size of the memory address space
+-! Memory is made up of bytes, each byte has an address
+-! Operating System: the central software managing the computer's resources
+-! OS includes the kernel, which is the main part that actively manages resources
+-! Kernel's Role: resource management, program control, protection
+-! The kernel is event driven, it responds to events
+-! Events can be: hardware interrupts, syscalls (e.g. printf), signals
+-! User mode cannot execute "privileged instructions" (e.g. access to certain regions of memory)
+- User mode allows for isolation
+- Root user is not related to kernal/user mode, and is completely user level (cannot access kernal)
+-! Device drivers: every device needs a device driver to control it
+-! VFS (virtual file system) is an interface with data structures and operations that a file system should support
+-! Compilation is not portable, the generated machine code is architecture specific
+-! POSIX: Portable Operating System Interface
+-! ABI: Application Binary Interface
+-! API: Application Programming Interface
+- Different OS have different ABIs
