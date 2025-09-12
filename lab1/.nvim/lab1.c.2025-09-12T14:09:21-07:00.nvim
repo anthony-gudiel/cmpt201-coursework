@@ -1,0 +1,36 @@
+#define POSIX_C_SOURCE 200809L
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main() {
+
+  // Buffer stores the address of the buffer containing the text
+  // getline() allocates memory for buffer, so we must free() before the end of
+  // the program or on failure
+  char *buffer = NULL;
+
+  // We set size to 0, allowing getline() to allocate an appropriate buffer size
+  // for us, instead of setting it ourselves
+  size_t size = 0;
+  printf("Please enter some text: ");
+  ssize_t number_of_characters = getline(&buffer, &size, stdin);
+
+  // If something goes wrong with getline(), display error and perform cleanup
+  if (number_of_characters == -1) {
+    perror("getline failed");
+    exit(EXIT_FAILURE);
+  }
+
+  char *saveptr;
+  char *ret = strtok_r(buffer, " ", &saveptr);
+  printf("%s\n", ret);
+ 
+  while (saveptr != NULL){
+    char *ret2 = strtok_r(NULL, " ", &saveptr);
+    printf("%s\n", ret2);
+  }
+
+  free(buffer);
+}

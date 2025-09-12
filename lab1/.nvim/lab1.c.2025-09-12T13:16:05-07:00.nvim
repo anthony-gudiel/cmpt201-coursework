@@ -1,0 +1,12 @@
+#define POSIX_C_SOURCE 200809L
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main() { 
+  char *buffer = NULL;
+  size_t size = 0;
+  ssize_t number_of_characters = getline(&buffer, &size, stdin);
+  printf("%lu\n", number_of_characters);
+}
