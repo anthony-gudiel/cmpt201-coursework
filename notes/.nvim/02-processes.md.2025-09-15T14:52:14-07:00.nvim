@@ -1,0 +1,12 @@
+## Processes
+
+- **Program**: compiled executable file
+- **Process**: a running program
+- The CPU can execute instructions from memory
+    - Therefore a program must be in memory to run
+- To begin executing a program, the OS will allocate space in memory for the program to run
+    - OS neatly organizes everything before executing the program and starting the process
+- ** *syscalls* ** can be used to control processes
+    - Core syscalls include: **fork()**, **exec()**, **wait()**
+- ** *man* page section numbers**: used when we need to pick between two things of the same name
+    - man 3 <name> will bring you to the c standard library
