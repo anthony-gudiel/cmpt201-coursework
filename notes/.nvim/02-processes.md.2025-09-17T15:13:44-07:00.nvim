@@ -10,7 +10,7 @@
     - Core syscalls include: **fork()**, **exec()**, **wait()**
 - ***man*** page section numbers: used when we need to pick between two things of the same name
     - man 3 <name> will bring you to the c standard library
-
+    
 
 ### Making a New Process
 - Changing a variable's value in one process does not affect any variables in other processes
@@ -42,4 +42,3 @@
     - `args[0]` is always the program's name on disk
     - `args[1]` and beyond are the other arguments
 - `exec()` takes what program to execute, and what arguments to pass the new process
-- See code example in 'forkexec.c'

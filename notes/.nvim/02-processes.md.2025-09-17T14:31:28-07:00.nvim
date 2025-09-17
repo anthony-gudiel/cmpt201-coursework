@@ -11,8 +11,8 @@
 - ***man*** page section numbers: used when we need to pick between two things of the same name
     - man 3 <name> will bring you to the c standard library
 
-
 ### Making a New Process
+
 - Changing a variable's value in one process does not affect any variables in other processes
     - Isolated memory spaces
     - Pointers in one process cannot access the memory of the other
@@ -28,18 +28,4 @@
 - For the child, fork() returns 0
     - However, children can call ***ppid()*** to find their parent
 - The parent and the child are the same program
-
-
-## Replacing a Current Program in Process
-- When called, **`exec()`** will:
-    - Remove the currently running program from this process's memory
-    - Load a new program into memory
-    - Start executing the new program
-    - Everything from the previous program is gone (e.g. allocated memory, stack, heap)
-- Each call of `exec()` must end with a `NULL` pointer
-    - Both `execv()` and `execl()`
-- When a program is executed, the OS hands it some command-line arguments
-    - `args[0]` is always the program's name on disk
-    - `args[1]` and beyond are the other arguments
-- `exec()` takes what program to execute, and what arguments to pass the new process
-- See code example in 'forkexec.c'
+-
