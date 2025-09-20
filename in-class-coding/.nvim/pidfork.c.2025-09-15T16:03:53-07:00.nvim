@@ -1,0 +1,8 @@
+#include <stdio.h>
+#include <unistd.h>
+
+int main(){
+  int mypid = getpid();
+  int parentpid = getppid();
+  printf("%d, %d", mypid, parentpid);
+}
