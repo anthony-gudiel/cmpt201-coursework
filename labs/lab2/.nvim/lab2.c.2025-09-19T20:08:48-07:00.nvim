@@ -1,0 +1,8 @@
+#include <stdio.h>
+
+int main() {
+  char userInput[30];
+  printf("Enter programs to run.\n");
+  scanf("%s", userInput);
+  printf("%s\n", userInput);
+}
