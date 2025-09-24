@@ -91,7 +91,7 @@
 - **{** and **}**: used to navigate between paragraphs
     - goes to the beginning of the paragraph
 
-## Bash Scripting
+## A2: Bash Scripting
 - **shebang (#!/bin/bash)**: the first line in a script that tells the system which interpreter to
   use
     - tells the system to use bash
@@ -154,7 +154,7 @@
         ...
     done`
 
-## Compilation
+## A3: Compilation
 - **pre-processing**: handles directives that start with #, like `#include` or `#define`
     - `#include <stdio.h>` imports the source code from stdio.h
     - outputs modified source file
@@ -195,7 +195,7 @@
 - **-I<dir>**: adds a directory to search for header files
     `clang -I./include main.c -o program` compiler looks in ./include for #include files
 
-## Make and CMake
+## A4: Make and CMake
 ### Make
 - **modern build system**: a tool that automates the process of turning source code into a final
   executable or library
