@@ -201,7 +201,7 @@
   executable or library
 - **target: prereq1 ... prereqn**:
     - target is what we want to make
-    - prereqs are files that, if they've been modified more recently than the target, will cauase
+    - prereqs are files that, if they've been modified more recently than the target, will cause
       the target to be remade
         - Or if they don't exist yet
 - **make**: runs the first target
