@@ -16,7 +16,7 @@
     - **n**: navigates to the next page
     - **q**: quits the man page
 - **mkdir**: creates a directory
-    - **rmdir**: removes a directory
+    - **rmdir**: removes an empty directory
 - **touch**: used to create a new file, or update the 'last modified' timestamp associated to the
   file
 - **cp**: copy file/directory
