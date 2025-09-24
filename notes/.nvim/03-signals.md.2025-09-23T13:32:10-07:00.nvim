@@ -1,0 +1,20 @@
+## Introduction to Signals
+- **Signals** are notifications with specific meanings
+- Programs can send signals to other programs
+    - So can the kernel
+- Parent processes register a **signal handler**
+    - `sigaction()` is used to register a signal handler
+- Child processes send a signal to the parent when it discovers what it's looking for
+    - `kill()` is used to signal the parent
+- **Function pointers** hold the address of a function
+  - Pointer to executable code
+  - Allows you to pass in functions to other functions
+- Function pointer syntax:
+    `type1 (* new_name)(type2) = target_function` where type1 and type2 are the types in the target function
+- Function pointers can be called just like a normal function
+
+## Coding with Signals
+- `struct sigaction`:
+    - .sa_handler = our handler function pointer
+    - .sa_flags = custom flags
+    - .sa_mask = set with `sigemptyset()`

@@ -1,0 +1,32 @@
+# Quiz 1 Review
+
+## A0: Linux Terminal
+- **ls**: lists the items in the current directory or the specified directory
+    - **-a**: argument to specify show all, including hidden directories and files
+    - **-l**: argument to specify long format, displaying detailed info like files types and
+      permissions, owner name, file name, last modified date/time
+- **pwd**: prints the directory you're currently in (**P**rint **W**orking **D**irectory)
+- **cd**: change to the specified directory (**C**hange **D**irectory)
+- **~**: refers to the home directory
+- **.**: refers to the current directory
+- **..**: refers to the parent directory of the current directory
+- **man**: provides a page of instructions on how to use the specified function/command
+    -**/**: used to search for a particular term within the man page
+    - **n**: navigates to the next page
+    - **q**: quits the man page
+- **mkdir**: creates a directory
+    - **rmdir**: removes a directory
+- **touch**: used to create a new file, or update the 'last modified' timestamp associated to the
+  file
+- **cp**: copy file/directory
+- **mv**: move file/directory
+- **rm**: remove file
+    - **rm -r**: remove recursively, can be used to remove directories
+- **cat**: shows the contents of a file in the terminal
+- **less**: similar to cat, but let's you scroll up and down instead of displaying everything at
+  once
+- **chmod**: used to change file permissions
+    - user (u), group (g), others (o), all (a)
+    - read (r), write (w), execute (x)
+    `chmod u+x filename` or `chmod o-x filename`
+- 
