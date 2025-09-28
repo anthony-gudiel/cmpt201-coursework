@@ -1,0 +1,36 @@
+#define _POSIX_C_SOURCE 200809L
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+
+int main() {
+  char *buffer = NULL;
+  size_t size = 0;
+
+  printf("Enter input: \n");
+  size_t num_characters = getline(&buffer, &size, stdin);
+
+  if (num_characters == -1) {
+    perror("getline");
+    exit(EXIT_FAILURE);
+  }
+
+  char* saveptr;
+  char *ret = strtok_r(buffer, " ", &saveptr);
+
+  char *ret2 = "";
+  while (ret2 != NULL) {
+    ret2 = strtok_r(NULL, " ", &saveptr);
+
+    if ((strcmp(ret, "print") == 0) && (ret2 != NULL)) {
+      printf("User entered print command\n");
+    } else {
+      printf("%s\n", ret2);
+    }
+  }
+
+
+}

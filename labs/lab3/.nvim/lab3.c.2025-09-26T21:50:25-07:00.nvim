@@ -1,18 +1,16 @@
-#define POSIX_C_SOURCE 200809L
+#define _POSIX_C_SOURCE 200809L
 #define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/wait.h>
 #include <unistd.h>
 
 int main() {
-
   char *buffer = NULL;
   size_t size = 0;
 
-  printf("Enter programs to run.\n");
+  printf("Enter input: \n");
   size_t num_characters = getline(&buffer, &size, stdin);
 
   if (num_characters == -1) {
@@ -22,28 +20,23 @@ int main() {
 
   char *saveptr;
   char *ret = strtok_r(buffer, " ", &saveptr);
-  char *args[10];
-  args[0] = ret;
-
   char *ret2 = "";
-  while (ret2 != NULL) {
-    int i = 1;
-    ret2 = strtok_r(NULL, " ", &saveptr);
-    args[i] = ret2;
-  }
-  pid_t forkResult = fork();
+  int counter = 1;
 
-  if (forkResult) {
-    int wstatus = 0;
-    if (waitpid(forkResult, &wstatus, 0) == -1) {
-      perror("waitpid");
-      exit(EXIT_FAILURE);
+  while (ret2 != NULL) {
+    ret2 = strtok_r(NULL, " ", &saveptr);
+    printf("ret2: %s\n", ret2);
+    printf("%d\n", strcmp(ret, "print"));
+
+    if ((strcmp(ret, "print\n") == 0) && (ret2 == NULL) && (counter == 1)) {
+      printf("User entered print command\n");
+    } else if ((ret2 != NULL) && (counter == 1)) {
+      printf("%s\n", ret);
+      printf("%s\n", ret2);
+    } else if (ret2 != NULL) {
+      printf("%s\n", ret2);
     }
-  } else {
-    if (execv(ret, args) == -1) {
-      perror("execv");
-      exit(EXIT_FAILURE);
-    } else {
-    }
+    counter++;
   }
+  free(buffer);
 }

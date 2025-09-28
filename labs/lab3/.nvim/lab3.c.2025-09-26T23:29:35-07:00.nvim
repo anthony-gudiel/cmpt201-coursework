@@ -1,0 +1,44 @@
+#define _POSIX_C_SOURCE 200809L
+#define _GNU_SOURCE
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+void store_input(int counter, char history[5][100]) {
+  char *buffer = NULL;
+  size_t size = 0;
+
+  printf("Enter input: ");
+  size_t num_characters = getline(&buffer, &size, stdin);
+
+  if (num_characters == -1) {
+    perror("getline");
+    exit(EXIT_FAILURE);
+  }
+
+  int index = counter % 5;
+  strcpy(history[index], buffer);
+
+  if (strcmp(buffer, "print\n") == 0) {
+    int start = (counter + 1) % 5;
+
+    for (int i = 0; i <= 4; i++) {
+      int index2 = (start + i) % 5;
+
+      if (strlen(history[index2]) > 0) {
+        printf("%s\n", history[index2]);
+      }
+    }
+  }
+}
+int main() {
+  int counter = 0;
+  char history[5][100] = {0};
+
+  while (1) {
+    store_input(counter, history);
+    counter++;
+  }
+}
