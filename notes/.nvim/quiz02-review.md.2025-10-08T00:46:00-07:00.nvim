@@ -1,0 +1,81 @@
+# Quiz 2 Review
+
+## A5: Debugging Tools
+- **Logging**: Where you insert print statements in your code to trace code flow
+    - log.c library is used over printf(), as it provides many additional features like message
+      severity, line number, etc.
+    - e.g. log_trace(), log_debug()
+- **Assertions**: A function that checks if a condition is true, and if not, throws an error
+    - Can be used as a precondition or to check return conditions
+    - e.g. assert(ret >= 0) throws an error if ret is not greater than or equal to 0
+- **Static Checkers**: Perform static checks as you write your code rather than when you run
+  your code
+    - e.g. the C and bash linters we have enabled for Neovim
+- **Sanitizers**: Dynamic tools that perform their checks at run time as compiler options
+    - To enable these sanitizers `-fsanitize=undefined` or `-fsanitize=address` for example
+- **Fuzzers**: An input generator that keeps running a function or program in order to detect
+  any potential problematic inputs that trigger problems
+    - Modern fuzzers have clever strategies to decide on which inputs to test
+    - Use `int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)` instead of main to
+      utilize libFuzzer
+    - Limit the duration of the fuzzer with `./program_name -max_total_time=10`
+- **Debuggers**: Grants a powerful set of features suited for all debugging tasks
+    - When compiling, use `-g` in the compiler options to signify that you may want to debug
+      the program later
+    - `cgdb main` to open the program main in the debugger (assuming it was tagged with `-g`)
+    - `break 11` puts a program break at line 11
+    - `next` lets you run line by line in the current scope, `step` follows execution through
+      function calls
+    - `print var` to show the value of variable 'var'
+    - `watch var` notifies you when the value of 'var' has changed
+    - `list` shows about 10 lines where the program is currently stopped.
+        - `list main` shows lines from function 'main'
+    - `run` runs the program
+    - `quit` quits the debugger
+
+## A6: Memory Layout
+- The **Memory Layout Table** from top to bottom is:
+    - Kernel address space
+    - Stack (grows downwards)
+    - Memory mapping (grows downwards)
+    - Heap (grows upwards)
+    - BSS (uninitialized global or static data)
+    - Data (initialized global or static data)
+    - Text (code)
+    - Address 0
+- **Pointer Arithmetic**: Incrementing/decrementing pointer values to address nearby address spaces
+    - Changes the value of the pointer value by size of the pointer type
+        - e.g. `ptr + 1` increments by 4 bytes if 'ptr' is `int *ptr`
+    - `address[i]` is the same as `address + i` for `int *address`
+- The **Text Segment** contains the compiled code of the program; the OS loads the program
+  itself into this segment
+- `objdump` prints out what is in an executable, organizing it into sections named
+  similarly to those in the memory layout table
+- The **BSS** segment contains uninitialized global/static data, while the **Data** segment
+  contains the initialized global/static data
+    - Since the data segment is lower on the memory layout table, it has a lower address than
+      data stored in the bss segment
+    - The BSS segment is automatically filled with zeros so we can still initialize the
+      uninitialized variables, while at the same time giving them a known and predictable value
+- The **Stack** segment is where local variables and function arguments are stored
+    - Size changes as functions are called
+    - It grows downward, so variables declared first occupy the highest memory address
+        - However, in an array, a lower index still means a lower address
+    - We can accidentally access other variables through incorrect pointer arithmetic
+    - Whenever a function is called, the stack creates a new **Stack Frame** and stores
+      everything necessary
+        - e.g. main() stack frame -> foo() stack frame with the properties discussed above
+          (grows downward)
+        - Stack frames also contain function arguments, return address, and a previous frame
+          pointer, in that order in memory
+        - It is possible to access other stack frames through pointer arithmetic
+- Misusing arrays or pointers can affect the return address and the previous frame pointer,
+  which can lead to a **stack buffer overflow attack**, where the return address is replaced
+  with an address that leads to a malicious piece of code
+- Standard library functions like gets() have the potential to overflow the stack
+- `getrlimit()` can be used to get the resource limits for a process
+    - e.g. available space on the stack
+
+## A7: Memory Layout Pt. 2, Data Types, Alignment
+- 
+

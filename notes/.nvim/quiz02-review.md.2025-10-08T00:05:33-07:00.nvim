@@ -1,0 +1,29 @@
+# Quiz 2 Review
+
+## A5: Debugging Tools
+- **Logging**: Where you insert print statements in your code to trace code flow
+    - log.c library is used over printf(), as it provides many additional features like message
+      severity, line number, etc.
+    - e.g. log_trace(), log_debug()
+- **Assertions**: A function that checks if a condition is true, and if not, throws an error
+    - Can be used as a precondition or to check return conditions
+    - e.g. assert(ret >= 0) throws an error if ret is not greater than or equal to 0
+- **Static Checkers**: Perform static checks as you write your code rather than when you run
+  your code
+    - e.g. the C and bash linters we have enabled for Neovim
+- **Sanitizers**: Dynamic tools that perform their checks at run time as compiler options
+    - To enable these sanitizers `-fsanitize=undefined` or `-fsanitize=address` for example
+- **Fuzzers**: An input generator that keeps running a function or program in order to detect
+  any potential problematic inputs that trigger problems
+    - Modern fuzzers have clever strategies to decide on which inputs to test
+    - Use `int LLVMFuzzerTestOneInput(const uint8_t *data, size_t size)` instead of main to
+      utilize libFuzzer
+    - Limit the duration of the fuzzer with `./program_name -max_total_time=10`
+- **Debuggers**: Grants a powerful set of features suited for all debugging tasks
+    - `cgdb main` to open the program main in the debugger
+    - `break 11` puts a program break at line 11
+    - `next` lets you run line by line in the current scope, `step` follows execution through
+      function calls
+    - `print var` to show the value of variable 'var'
+    - `watch var` notifies you when the value of 'var' has changed
+
