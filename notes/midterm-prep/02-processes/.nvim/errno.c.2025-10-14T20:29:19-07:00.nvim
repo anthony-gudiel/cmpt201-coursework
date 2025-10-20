@@ -1,0 +1,14 @@
+#include <stdio.h>
+#include <errno.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main (void) {
+  char *args[] = {"/bin/notreal", "-a"};
+  if (execv("/bin/notreal", args) == -1) {
+    write(STDERR_FILENO, strerror(errno), strlen(strerror(errno)));
+    exit(EXIT_FAILURE);
+  }
+  return 0;
+}

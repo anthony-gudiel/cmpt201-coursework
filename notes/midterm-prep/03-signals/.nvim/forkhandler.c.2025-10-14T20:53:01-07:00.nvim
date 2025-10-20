@@ -1,0 +1,9 @@
+#include <stdio.h>
+#include <signal.h>
+
+int main (void) {
+  struct sigaction act = {0};
+  act.sa_flags = 0;
+  act.sa_handler = handler;
+  sigemptyset(&act.sa_mask);
+}

@@ -1,0 +1,21 @@
+#include <stdio.h>
+#include <pthread.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <stdint.h>
+#include <string.h>
+
+void *thread_function (void *arg) {
+  char *message = arg;
+  printf("Message: %s\n", message);
+  return (void *)strlen(message);
+}
+
+int main (void) {
+  pthread_t thread_id; 
+  pthread_create(&thread_id, NULL, thread_function, "Hello thread");
+  void* ans;
+  pthread_join(thread_id, &ans);
+  long long len = (long long) ans;
+  printf("Done: answer is %lld. \n", len);
+}

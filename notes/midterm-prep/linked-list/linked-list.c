@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+  int data;
+  struct Node *next;
+};
+
+void append(struct Node **list, int data) {
+  struct Node *newNode = malloc(sizeof(*newNode));
+  if (newNode == NULL) {
+    perror("malloc() failed");
+    exit(EXIT_FAILURE);
+  }
+
+  newNode->data = data;
+  newNode->next = NULL;
+
+  if (*list == NULL) {
+    *list = newNode;
+  } else {
+    struct Node *current = *list;
+    while (current->next != NULL) {
+      current = current->next;
+    }
+    current->next = newNode;
+  }
+}
+
+void printList(struct Node *list) {
+  printf("The list is: ");
+  struct Node *current = list;
+  while (current != NULL) {
+    printf("%d, ", current->data);
+    current = current->next;
+  }
+  printf("\n");
+}
+
+void freeList(struct Node **list) {
+  struct Node *current = *list;
+  while (current != NULL) {
+    struct Node *temp = current->next;
+    free(current);
+    current = temp->next;
+  }
+  *list = NULL;
+}
+
+int main() {
+  struct Node *head = NULL;
+  append(&head, 10);
+  printList(head);
+  freeList(&head);
+}
