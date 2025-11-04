@@ -1,0 +1,46 @@
+# Files
+
+## Basic I/O Syscalls
+- **File Offset** is a pointer that points to a byte in the file where you operate
+- `read()` and `write()` automatically increments the offset
+    - Subsequent calls can continue with the next data
+- `open()` is used to open a file and takes the following parameters:
+    - `int flags` specifies O_RDONLY, O_WRONLY, O_RDWR
+        - Flags can be bitwise OR'd
+    - `mode_t mode` sets file permissions when creating file
+        - S_IRUSR | S_IWUSR: user can read/write
+        - S_IRWXU: user can execute
+        - Returns a file descriptor that's a small positive int
+        - Only needed when you create or set a temp file
+- `write()` writes buf to a file descriptor and returns the number of bytes written
+    - The number of bytes written may be less than the count due to something like insufficient
+      space
+- `read()` reads from a file descriptor and returns the number of bytes read
+    - If the offset is at or past the end of the file, no bytes are read, and returns 0
+    - Number of bytes read may be less than the number of bytes requested
+- `close()` closes the file descriptor
+- `lseek()` allows you to move the offset of a file manually
+    - Argument `int whence` is from which location we want to adjust the file offset
+    - Can set to SEEK_SET, SEEK_CUR, SEEK_END (start, current, and end)
+    - End of the file is the 1st byte after end of data
+
+## Buffered I/O
+- Standard library (stdlib) functions
+    - All I/O functions start with f
+        - e.g. `fprintf()`, `fgets()`
+- `fprintf()` manages a buffer in memory and writes to the buffer
+    - No syscall required (unlike write()), therefore faster
+    - Called buffered I/O
+- Syscalls like `write()` take a file descriptor, while library functions like `fprintf()` take a
+  stream (FILE *stream*)
+- A file stream is a convenient wrapper around a file descriptor
+    - Think of it as a file descriptor plus a buffer backing it up
+- You can get a file stream from a file descriptor using `fdopen()`
+- You can get the file descriptor from a file stream using `fileno()`
+- When using `fprintf()`, the buffer needs to be manually flushed, or will flush when the program
+  exits
+    - Using `fflush()`
+- A blocking I/O call doesn't return until the operation can be done
+    - e.g. `read()` won't return until there's something to read
+- A non-blocking I/O call is an operation that if it can't be done immediately, will return an error
+    - Usually EAGAIN, to signify try again later

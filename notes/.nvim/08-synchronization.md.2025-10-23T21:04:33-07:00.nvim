@@ -1,0 +1,47 @@
+# Synchronization
+
+- **Synchronization** refers to coordinating the execution among different threads
+- Data races are hard because they don't always occur, some may be rare
+    - Therefore we need to reason about multiple threads at once
+- What looks like one operation may actually be a number of sub-operations
+    - Use a **mutex** to avoid the mix up of sub-operations
+        - Mutual exclusion
+- Lock mechanisms consist of:
+    - Define the lock variable to create a lock
+    - `lock()` function that grabs a lock
+    - `unlock()` function that releases a lock
+- Locks guarantee that only a single thread can hold a lock
+- Trying to lock using a lock that is already in use causes the function to wait until the lock
+  is available
+    - `lock()` blocks the thread until mutex is free
+- Mutexes are local to the process
+- `pthread_mutex_lock(&mutex)` will:
+    - Locks the mutex and returns immediately if the mutex is free
+    - Blocks, then locks the mutex and returns once it is free
+- Even if multiple locks happen at once, only a single thread will hold the lock
+    - We cannot control which thread grabs the lock first, giving us non-deterministic
+      behaviour
+
+## Lock Usage
+- **Atomic**: multiple operations run as if they are a single operation
+- Locks effectively serialize operations
+    - Only one thread at a time can run operations guarded by a lock
+- We can have a data race when threads share a variable:
+    - Accessing same global variable
+    - Accessing same memory via a pointer
+- Data race may be from one piece of code
+- Data race may be from different sections of code, each using the same lock/variable
+- We can use multiple locks to protect independent shared variables
+    - Creating independent locks reduces **lock contention**
+- `pthread_mutex_trylock()` returns immediately if unable to lock
+    - No hang, doesn't wait for unlock
+
+## Critical Section and Thread Safety
+- The **Critical Section** is a piece of code that accesses a shared variable
+    - and must not be concurrently executed by more than one thread
+- Ideal solution for CS problem satisfies:
+    - **Mutual Exclusion**: only one thread should be allowed to run in the CS
+    - **Progress**: a thread should eventually complete/make progress in its task
+    - **Bounded Waiting**: an upper bound must exist for the amount of time a thread waits to
+      enter the critical section
+        - Should only be blocked for a specified amount of time
