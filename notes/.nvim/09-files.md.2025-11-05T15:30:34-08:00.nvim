@@ -66,12 +66,3 @@
         - Filetype, owner, etc.
 
 - **Hard Links**: we can give many names to the same file
-    - `rm` actually removes hard links
-- **Soft Links**: also called symbolic links or sym links, is an actual file
-    - The contents of the file is the path to the original file
-
-## Virtual File System
-- Defines the interface that different file systems can implement
-- Linux presents all file systems as a single tree
-- **Mounting**: combining multiple file trees into one
-    - All file systems are mounted to form a single tree
