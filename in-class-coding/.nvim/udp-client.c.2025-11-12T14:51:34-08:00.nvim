@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <unistd.h>
+
+int main(void) {
+  printf("Client: \n");
+
+  // socket()
+  int socket_fd = socket(AF_UNIX, SOCK_DGRAM, 0);
+  if (socket_fd == -1) {
+    perror("socket failed");
+    exit(EXIT_FAILURE);
+  }
+
+  // write()
+  struct sockaddr_un addr;
+  memset(&addr, 0, sizeof(struct sockaddr_un));
+  struct sockaddr_un {
+    sa_family_t sun_family;
+    char sun_path[108];
+  };
+  addr.sun_family = AF_UNIX;
+  snprintf(addr.sun_path, 108, "udp_socket");
+
+  char *msg = "Hopefully you get this message.\n";
+  int bytes_written = sendto(socket_fd, msg, strlen(msg), 0, (struct sockaddr*)&addr,
+      sizeof(struct sockaddr_un));
+
+  if (bytes_written == -1) {
+    perror("write failed");
+    exit(EXIT_FAILURE);
+  }
+
+  // close()
+  close(socket_fd);
+
+  return 0;
+}

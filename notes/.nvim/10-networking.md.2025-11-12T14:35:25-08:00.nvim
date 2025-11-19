@@ -1,0 +1,47 @@
+# Networking
+
+## Networking Stack Basics
+- Software uses a **network stack** to organize responsibilities into layers
+- The **physical layer** does the hardware control
+    - In charge of physically sending and receiving data
+    - Analogy: package delivery needs a car and a driver
+- The **link/MAC layer** does local network addressing and routing
+    - e.g. wired or wireless local network
+    - MAC addresses for devices = Medium Address Control
+- The **IP/network layer** does inter-network addressing and routing
+    - IP = Internet Protocol
+    - Uses IP address for addressing
+- The **transport layer** can do packet tracking and retransmission
+    - Takes care of issues like: lost packets, out of order packets, duplicate packets
+    - TCP: Transmission Control Protocol - provides protection against these issues
+    - UDP : User Datagram Protocol - does not provide any protection, raw datagrams/packets
+    - TCP builds upon a UDP packet
+    - Port numbers are used to identify where on a computer the packet should be sent to
+        - Which application
+- The **application layer** is what the application is doing
+
+## Socket Interface
+- `socket()` creates a socket and returns a file descriptor
+    - The argument `int domain` specifies what protocol to use
+        - Defines a set of rules that an entity needs to follow to communicate with another entity
+          using the same rules
+        - Examples of domains are AF_UNIX, AF_INET, AF_INET6
+    - The argument `int type` specifies either TCP or UDP
+        - TCP = SOCK_STREAM. Sequenced, reliable, two-way, connection based byte stream
+        - UDP = SOCK_DGRAM. Datagrams, meaning connectionless, unreliable, packet size is limited
+    - The argument `int protocol` will always be 0 in our case
+- TCP socket sequence:
+    - `bind()` binds the socket to an address using an address struct
+        - `struct sockaddr`
+    - `listen()` marks the socket as passsive
+        - By default, a socket is active, so we must change that if we want to wait on a connection
+    - `accept()` will accept a new connection, and returns a new socket to use for the new connection
+        - Blocking call
+    - `connect()` is how the client connects to a passive socket
+- Connectionless means that we don't establish the connection first
+    - No active ongoing connection
+- UDP socket sequence:
+    - There are no passive or active sockets
+    - `recvfrom()`
+    - `sendto()`
+- Client does not need to use `bind()` in UDP

@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <pthread.h>
+
+static void *thread0(void *arg) {
+  pthread_mutex_lock(&mutex0);
+  printf("thread0: mutex0\n");
+
+  pthread_mutex_lock(&mutex1);
+  printf("thread0: mutex1\n");
+
+  pthread_mutex_unlock(&mutex0);
+  pthread_mutex_unlock(&mutex1);
+  pthread_exit(0);
+
+}
+
+static void *thread1(void *arg) {
+  pthread_mutex_lock(&mutex0);
+  printf("thread1: mutex0\n");
+
+  pthread_mutex_lock(&mutex1);
+  printf("thread1: mutex1\n");
+
+  pthread_mutex_unlock(&mutex0);
+  pthread_mutex_unlock(&mutex1);
+  pthread_exit(0);
+
+}
+
+int main() {
+  pthread_t t0;
+  pthread_t t1;
+
+  if (pthread_create(&t0, NULL, thread0, NULL) != 0) {
+    perror("pthread_create");
+  }
+
+  if (pthread_create(&t1, NULL, thread1, NULL) != 0) {
+    perror("pthread_create");
+  }
+}

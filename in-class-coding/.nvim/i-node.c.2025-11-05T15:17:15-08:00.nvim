@@ -1,0 +1,26 @@
+#define _POSIX_C_SOURCE 200809L
+#include <stdio.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <stdlib.h>
+
+int main (int argc, char *argv[]) {
+  struct stat sb;
+
+  if (lstat(argv[1], &sb) == -1) {
+    perror("lstat failed");
+    exit(EXIT_FAILURE);
+  }
+
+  printf("File name: %s\n", argv[1]);
+  printf("File Type:\n");
+
+  if (sb.st_mode == S_IFREG) {
+    printf("Regular file\n");
+  } else if (sb.st_mode == S_IFDIR) {
+    printf("Directory\n");
+  } else {
+    printf("Other\n");
+  }
+
+}

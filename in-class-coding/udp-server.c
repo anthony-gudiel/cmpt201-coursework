@@ -1,0 +1,60 @@
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <unistd.h>
+
+int main(void) {
+  printf("Server: \n");
+
+  // socket()
+  int socket_fd = socket(AF_UNIX, SOCK_DGRAM, 0);
+  if (socket_fd == -1) {
+    perror("socket failed");
+    exit(EXIT_FAILURE);
+  }
+
+  // remove existing socket if any
+  if (remove("udp_socket") == -1 && errno != ENOENT) {
+    perror("remove failed");
+    exit(EXIT_FAILURE);
+  }
+
+  // bind()
+  struct sockaddr_un sockstruct;
+  sockstruct.sun_family = AF_UNIX;
+  snprintf(sockstruct.sun_path, 108, "udp_socket");
+
+  if (bind(socket_fd, (struct sockaddr *)&sockstruct,
+           sizeof(struct sockaddr_un)) == -1) {
+    perror("bind failed");
+    exit(EXIT_FAILURE);
+  }
+
+  while (1) {
+
+    // read()
+    const int SIZE = 1024;
+    char buf[SIZE];
+
+    struct sockaddr_un return_address;
+    socklen_t retaddr_size = sizeof(struct sockaddr_un);
+    memset(&return_address, 0, sizeof(struct sockaddr_un));
+
+    ssize_t ans = recvfrom(socket_fd, buf, SIZE, 0,
+                           (struct sockaddr *)&return_address, &retaddr_size);
+
+    if (ans == -1) {
+      perror("recvfrom failed");
+      exit(EXIT_FAILURE);
+    }
+    write(STDOUT_FILENO, buf, ans);
+  }
+
+  // close()
+  close(socket_fd);
+
+  return 0;
+}
