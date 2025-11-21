@@ -1,0 +1,39 @@
+# Inter-Process Communication
+- **Inter-Process Communication** allows different processes and threads to communicate with
+  each other
+
+## Pipes
+- `pipe(int filedes[2])` to create a new pipe
+    - Creates 2 file descriptors in filedes
+    - `filedes[0]` gives us the read end
+    - `filedes[1]` gives us the write end
+- Pipes use a buffer in the kernel
+- Once you determine the sender and receiver, it cannot be changed
+- Pipes are byte streams
+    - One byte at a time
+- Typical use case of pipes in parent-child communication:
+    - First create a pipe, then call `fork()`
+    - Both file descriptors are available in parent and child
+- Important points about pipes:
+    - Each process typically uses a different end (close the other)
+    - The pipe's buffer size in the kernel is fixed at PIPE_BUF (4096 in Linux)
+        - If n <= PIPE_BUF, it is atomic
+        - If n > PIPE_BUF, it may not be atomic
+    - Closing all `write()` file descriptors will make `read()` return 0 after returning all data
+      from buffer
+- `dup2(int oldfd, int newfd)` can redirect another program's input/output to pipes
+    - Adjusts the file descriptor newfd so that it now refers to the same open file descriptor as
+      oldfd
+    - e.g. `dup2(filedes[1], STDOUT_FILENO)`: any writes to STDOUT are instead sent to write end of
+      the pipe
+    - e.g. `dup2(filedes[0], STDIN_FILENO)`: any reads from STDIN are instead read from the read end
+      of the pipe
+- `popen()` does three things to conveniently run a command:
+    - Forks a new process and execs the command in the shell
+    - Mode can be 'r' or 'w'
+
+## FIFOs
+- Two or more related processes can share a pipe, however unrelated processes cannot
+- Instead, unrelated processes can communicate with each other through FIFOs
+- A FIFO is a named pipe
+    - `int mkfifo()`

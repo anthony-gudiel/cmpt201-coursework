@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+
+int main(void) {
+
+  char *fifo = "./myfifo";
+  if (mkfifo(fifo, S_IRUSR | S_IWUSR) == -1) {
+    perror("fifo() failed");
+    exit(EXIT_FAILURE);
+  }
+
+  fd = open(fifo, O_RDONLY);
+  if (fd == -1) {
+    perror("open() failed");
+    exit(EXIT_FAILURE);
+  }
+
+  while (read(fd, readbuf, sizeof(readbuf)) > 0) {
+    printf("Received %s\n", readbuf);
+  }
+}
