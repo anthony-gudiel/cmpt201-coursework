@@ -89,7 +89,7 @@ Understanding the Server:
 1. Explain the argument that the `run_acceptor` thread is passed as an argument.
   `run_acceptor()` is passed a pointer to an `acceptor_args` struct so the
 thread knows when to accept from clients, what to share with clients, and to
-lock the data using a mutexu
+lock the data using a mutex.
 
 2. How are received messages stored?
   As a linked list.

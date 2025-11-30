@@ -1,0 +1,34 @@
+# Cryptography Algorithms
+
+## The Absolute Basics
+- The CIA model:
+    - **Confidentiality**: information is only disclosed to those authorized to know it
+    - **Integrity**: only modify information in allowable ways, and only by authorized parties
+    - **Availability**: those authorized for access are not prevented from it
+- General cryptography process: plain text -> cipher text -> plain text
+    - encrypt -> decrypt
+- **Caesar Cipher**: shift each letter a certain number of letters down the alphabet
+    - +1: A becomes B
+- The problem with a secret algorithm is that once the algorithm is known, the code is useless
+- In modern encryption, the algorithms are public, but the keys are secret
+    - If only the key is private, it's easy to replace with a new key if it's figured out
+    - Given a key, it should be relatively easy to encrypt or decrypt the message
+    - Without they key, it should be hard to compute or decrypt a message
+- The **Window of Validity** is the minimum time to compromise a cryptographic algorithm
+    - Must only use algorithms that have not been compromised
+    - The problem is that the window of validity may be shorter than how long you need the algorithm
+      to be effective for
+        - Therefore we need a way to replace encryption function easily
+- Zero key encryption: **cryptographic hash functions**
+- One key encryption: **secret-key functions** (symmetric encryption)
+- Two key encryption: **public-key functions** (asymmetric encryption)
+
+## Zero Key Encryption
+- Hash function *h()* takes a message *m* as input and produces a smaller (shorter) number *h(m)*
+- Hash functions need to be:
+    - Easy to compute
+    - A one way function
+    - Given an input, it should be difficult to find another input value that produces the same hash value (weak
+      collision resistance)
+    - Given a hash function, it should be difficult to find any two values that produce the same
+      hash (strong collision resistance)
